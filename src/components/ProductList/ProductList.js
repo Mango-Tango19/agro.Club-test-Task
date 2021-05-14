@@ -1,10 +1,21 @@
 import styles from './ProductList.module.scss'
 import { useProductList } from './useProductList'
+import Product from '../Product/Product'
+import Loader from '../Loader/Loader'
+import ErrorIndicator from '../Error-indicator/Error-indicator'
 
 const ProductList = () => {
-  const { items, filter, status, updateFilter } = useProductList()
+  const { items, filter, status, updateFilter, loading, error } = useProductList()
 
   const handleFilterIsNewUpdate = () => updateFilter({ isNew: !filter.isNew })
+
+  if (loading) {
+    return <Loader />
+  }
+
+  if (error) {
+    return <ErrorIndicator />
+  }
 
   return (
     <div className={styles.root}>
@@ -18,10 +29,7 @@ const ProductList = () => {
       <div>Status: {status}</div>
       <div className={styles.itemsContainer}>
         {items.map(item => (
-          <div className={styles.productContainer} key={item.id}>
-            <span className={styles.productName}>{item.name}</span>
-            <span>{item.description}</span>
-          </div>
+          <Product item={item} key={item.id} />
         ))}
       </div>
     </div>

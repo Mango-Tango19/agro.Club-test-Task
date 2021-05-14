@@ -1,0 +1,75 @@
+@import '../../scss/mixins';
+
+.productContainer {
+  display: flex;
+  border-radius: 16px;
+  -webkit-box-shadow: 0px 1px 34px 18px rgba(34, 60, 80, 0.13);
+  -moz-box-shadow: 0px 1px 34px 18px rgba(34, 60, 80, 0.13);
+  box-shadow: 0px 1px 34px 18px rgba(34, 60, 80, 0.13);
+
+  img {
+    border-radius: 16px;
+  }
+}
+
+.productCard {
+  padding: 8px 12px 12px 16px;
+  display: flex;
+  width: 100%;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .category {
+    display: flex;
+    .categoryName {
+      color: #a8b8ca;
+      flex-grow: 2;
+      @include fontStyle(14px, 20px, 600);
+    }
+    .tag {
+      @include fontStyle(10px, 20px, 600);
+      padding: 0 8px;
+      border-radius: 12px;
+    }
+  }
+
+  .name {
+    span {
+      @include fontStyle(16px, 24px, 700);
+    }
+  }
+  .description {
+    span {
+      @include fontStyle(14px, 20px, 500);
+    }
+  }
+
+  .priceInfo {
+    display: flex;
+    flex-grow: 3;
+    align-items: flex-end;
+
+    .price {
+      @include fontStyle(16px, 16px, 700);
+      margin-right: 8px;
+    }
+    .discount {
+      @include fontStyle(12px, 16px, 600);
+      color: #ff9900;
+    }
+  }
+}
+
+.limitedClass {
+  background-color: #e7eef9;
+  color: #889bb1;
+  margin-right: 8px;
+}
+
+.newClass {
+  background-color: #e6f5e6;
+  color: #20b02e;
+}

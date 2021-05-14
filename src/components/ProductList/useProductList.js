@@ -7,6 +7,8 @@ const initialState = {
   },
   status: 'idle', // idle | work | success | error
   items: [],
+  loading: true,
+  error: false,
 }
 const reducer = (state, action) => {
   console.log(`Action: ${action.type}; Payload:`, action.payload)
@@ -34,6 +36,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         status: 'work',
+        loading: true,
       }
     }
     case 'request:success': {
@@ -41,12 +44,15 @@ const reducer = (state, action) => {
         ...state,
         status: 'success',
         items: action.payload,
+        loading: false,
       }
     }
     case 'request:error': {
       return {
         ...state,
         status: 'error',
+        loading: false,
+        error: true,
       }
     }
   }

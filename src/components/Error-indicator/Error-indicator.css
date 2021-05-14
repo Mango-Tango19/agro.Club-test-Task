@@ -1,0 +1,12 @@
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.error-text {
+  color: tomato;
+  font-weight: 500;
+  font-size: 2rem;
+}
