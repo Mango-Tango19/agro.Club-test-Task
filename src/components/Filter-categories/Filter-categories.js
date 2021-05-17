@@ -1,5 +1,6 @@
-import s from './Filter-categories.module.scss'
-
+//import s from './Filter-categories.module.scss'
+import FiltersContainer from '../Filters-container/Filters-container'
+import Filter from '../Filter/Filter'
 const FilterCategories = ({ items }) => {
   const onlyUnique = (value, index, self) => {
     return self.indexOf(value) === index
@@ -18,19 +19,14 @@ const FilterCategories = ({ items }) => {
   })
   //render categories on page
   const renderCategory = item => {
-    const { categoryId, categoryName, categoryType } = item
-    return (
-      <button className={`${s.tag}`} id={categoryId} key={categoryType}>
-        {categoryName}
-      </button>
-    )
+    return <Filter item={item} key={item.categoryId} />
   }
 
   return (
-    <div className={s.tags}>
-      <button className={`${s.tag} ${s.active}`}>All</button>
+    <FiltersContainer>
+      <Filter item={'all'} />
       {categoriesOnPage.map(renderCategory)}
-    </div>
+    </FiltersContainer>
   )
 }
 

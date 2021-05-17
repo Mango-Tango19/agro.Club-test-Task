@@ -1,0 +1,31 @@
+@import '../../scss/mixins';
+
+.category {
+  @include fontStyle(14px, 20px, 500);
+  color: #037bff;
+  padding: 4px 16px;
+  border: solid 1px #037bff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-block;
+  background-color: white;
+}
+
+.category:hover {
+  transform: scale(1.1);
+}
+
+.category:not(:last-child) {
+  margin-right: 15px;
+}
+
+.active {
+  background-color: #037bff;
+  color: white;
+}
+
+.enable {
+  opacity: 50%;
+  cursor: not-allowed;
+}

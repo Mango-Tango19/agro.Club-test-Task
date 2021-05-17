@@ -33,6 +33,16 @@ const reducer = (state, action) => {
         },
       }
     }
+    case 'category:change': {
+      return {
+        ...state,
+        status: 'work',
+        filter: {
+          ...state.filter,
+          category: [...state.filter.category, action.payload],
+        },
+      }
+    }
     case 'request:start': {
       return {
         ...state,
@@ -62,6 +72,7 @@ export const useProductList = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const updateFilter = useCallback((filter = {}) => dispatch({ type: 'filter:change', payload: filter }), [])
   const resetFilter = useCallback(() => dispatch({ type: 'filter:reset' }), [])
+  const categoryChange = useCallback((category = []) => dispatch({ type: 'category:change', payload: category }), [])
   const performRequest = useCallback(() => {
     dispatch({ type: 'request:start' })
     // prettier-ignore
@@ -70,6 +81,8 @@ export const useProductList = () => {
         `isNew=${filter.isNew}`
       ].join('&')
 
+    let url = `/api/product?${serializeFilter(state.filter)}`
+    console.log('url is: ', url)
     fetch(`/api/product?${serializeFilter(state.filter)}`)
       .then(res => {
         if (!res.ok || res.status !== 200) {
@@ -92,5 +105,6 @@ export const useProductList = () => {
     ...state,
     updateFilter,
     resetFilter,
+    categoryChange,
   }
 }
