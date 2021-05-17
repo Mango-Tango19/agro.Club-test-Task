@@ -1,3 +1,14 @@
+@import '../../scss/mixins';
+
 .header {
-  color: blue;
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 24px;
+  align-items: baseline;
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid #dddddd;
+
+  span {
+    @include fontStyle(24px, 32px, 700);
+  }
 }

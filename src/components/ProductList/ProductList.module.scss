@@ -1,14 +1,64 @@
+@import '../../scss/mixins';
+
 .root {
   padding: 20px;
   display: grid;
   grid-gap: 16px;
   grid-auto-columns: 1fr;
+  background-color: #fafafa;
 }
-
-.filtersContainer {
+/*filters area styles*/
+.filters {
   display: grid;
-  grid-template-columns: max-content max-content;
-  grid-gap: 24px;
+  width: 920px;
+  height: 152px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1.5fr;
+  box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.04);
+  border-radius: 16px;
+  box-sizing: border-box;
+  padding: 24px 20px;
+  background-color: white;
+
+  &Header {
+    display: flex;
+    align-items: flex-start;
+    span {
+      @include fontStyle(18px, 24px, 600);
+      color: #037bff;
+    }
+
+    img {
+      margin-right: 8px;
+    }
+  }
+
+  &Content {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+  }
+
+  &Category {
+    display: grid;
+  }
+
+  &Status {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &Title {
+    @include fontStyle(14px, 20px, 600);
+    color: #a8b8ca;
+    text-transform: uppercase;
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
+
+  &Limited {
+    grid-column-start: 2;
+    grid-column-end: 4;
+  }
 }
 
 .itemsContainer {
@@ -16,4 +66,41 @@
   grid-gap: 24px;
   grid-template-columns: repeat(3, 448px);
   grid-auto-rows: 145px;
+}
+
+/*checkbox styles*/
+
+.customCheckbox {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.customCheckbox + label:hover {
+  cursor: pointer;
+}
+
+.customCheckbox + label {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+.customCheckbox + label::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 1px solid #adb5bd;
+  border-radius: 0.25em;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+
+.customCheckbox:checked + label::before {
+  background-image: url(../../assets/icons/Check.svg);
+  background-size: 12px 12px;
 }

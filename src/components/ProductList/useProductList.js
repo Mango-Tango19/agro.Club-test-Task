@@ -3,6 +3,7 @@ import { useCallback, useEffect, useReducer } from 'react'
 const initialState = {
   filter: {
     isNew: false,
+    isLimited: false,
     category: [],
   },
   status: 'idle', // idle | work | success | error
@@ -64,10 +65,10 @@ export const useProductList = () => {
   const performRequest = useCallback(() => {
     dispatch({ type: 'request:start' })
     // prettier-ignore
-    const serializeFilter = filter => [
-      ...filter.category.map(categoryId => `category[]=${categoryId}`),
-      `isNew=${filter.isNew}`,
-    ].join('&')
+    const serializeFilter = filter =>
+      [...filter.category.map(categoryId => `category[]=${categoryId}`),
+        `isNew=${filter.isNew}`
+      ].join('&')
 
     fetch(`/api/product?${serializeFilter(state.filter)}`)
       .then(res => {
