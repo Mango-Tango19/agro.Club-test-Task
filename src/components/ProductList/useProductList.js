@@ -43,6 +43,16 @@ const reducer = (state, action) => {
         },
       }
     }
+    case 'category:reset': {
+      return {
+        ...state,
+        status: 'work',
+        filter: {
+          ...state.filter,
+          category: [],
+        },
+      }
+    }
     case 'request:start': {
       return {
         ...state,
@@ -73,11 +83,12 @@ export const useProductList = () => {
   const updateFilter = useCallback((filter = {}) => dispatch({ type: 'filter:change', payload: filter }), [])
   const resetFilter = useCallback(() => dispatch({ type: 'filter:reset' }), [])
   const categoryChange = useCallback((category = []) => dispatch({ type: 'category:change', payload: category }), [])
+  const resetCategory = useCallback(() => dispatch({ type: 'category:reset' }), [])
   const performRequest = useCallback(() => {
     dispatch({ type: 'request:start' })
     // prettier-ignore
     const serializeFilter = filter =>
-      [...filter.category.map(categoryId => `category[]=${categoryId}`),
+      [ ...filter.category.map(categoryId => `category[]=${categoryId}`),
         `isNew=${filter.isNew}`
       ].join('&')
 
@@ -106,5 +117,6 @@ export const useProductList = () => {
     updateFilter,
     resetFilter,
     categoryChange,
+    resetCategory,
   }
 }
