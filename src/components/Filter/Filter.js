@@ -10,18 +10,20 @@ const Filter = ({ item }) => {
     let categoryId = 'all'
     let categoryType = 'all'
 
-    const handleResetCategory = () => resetCategory({ category: [] })
-
     return (
-      <button id={categoryId} key={categoryType} className={clazz} onClick={() => handleResetCategory()}>
+      <button id={categoryId} key={categoryType} className={clazz} onClick={() => resetCategory({ category: [] })}>
         All
       </button>
     )
   }
-  const handleUpdateCategory = categoryId => updateCategory({ category: [categoryId] })
   const { categoryId, categoryName, categoryType } = item
   return (
-    <button id={categoryId} key={categoryType} className={clazz} onClick={() => handleUpdateCategory(categoryId)}>
+    <button
+      id={categoryId}
+      key={categoryType}
+      className={clazz}
+      onClick={() => updateCategory({ category: [categoryId] })}
+    >
       {categoryName}
     </button>
   )

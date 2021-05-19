@@ -9,10 +9,11 @@ import filterIcon from '../../assets/icons/filters.svg'
 import FilterCategories from '../Filter-categories/Filter-categories'
 
 const ProductList = () => {
-  const { items, filter, status, updateFilter, loading, error } = useProductList()
+  const { items, filter, status, updateFilter, loading, error, updateCategory } = useProductList()
 
   const handleFilterIsNewUpdate = () => updateFilter({ isNew: !filter.isNew })
   const handleFilterIsLimitedUpdate = () => updateFilter({ isLimited: !filter.isLimited })
+  const handleUpdateCategory = () => updateCategory({ category: filter.category })
 
   if (loading) {
     return <Loader />
@@ -64,6 +65,7 @@ const ProductList = () => {
           </div>
         </div>
         <span>Status: {status}</span>
+        <button onClick={() => handleUpdateCategory()}>update</button>
         <div className={styles.itemsContainer}>
           {items.map(item => (
             <Product item={item} key={item.id} />
