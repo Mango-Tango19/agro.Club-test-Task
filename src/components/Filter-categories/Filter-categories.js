@@ -1,5 +1,6 @@
-import FiltersContainer from '../Filters-container/Filters-container'
+//import FiltersContainer from '../Filters-container/Filters-container'
 import Filter from '../Filter/Filter'
+import s from './Filter-categories.module.scss'
 //import { useProductList } from '../ProductList/useProductList'
 const FilterCategories = ({ items }) => {
   const onlyUnique = (value, index, self) => {
@@ -23,10 +24,10 @@ const FilterCategories = ({ items }) => {
   }
 
   return (
-    <FiltersContainer>
+    <div className={s.categories}>
       <Filter item={'all'} active={true} />
       {categoriesOnPage.map(renderCategory)}
-    </FiltersContainer>
+    </div>
   )
 }
 

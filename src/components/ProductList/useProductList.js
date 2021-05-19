@@ -11,6 +11,7 @@ const initialState = {
   loading: true,
   error: false,
 }
+
 const reducer = (state, action) => {
   console.log(`Action: ${action.type}; Payload:`, action.payload)
   switch (action.type) {
@@ -68,6 +69,7 @@ const reducer = (state, action) => {
         loading: false,
       }
     }
+
     case 'request:error': {
       return {
         ...state,
@@ -78,29 +80,34 @@ const reducer = (state, action) => {
     }
   }
 }
+
+const getData = (url, filter) => {
+  return fetch(`${url}${filter}`).then(res => {
+    if (!res.ok || res.status !== 200) {
+      throw new Error(`Request failed with status code ${res.status}`)
+    }
+    return res.json()
+  })
+}
 export const useProductList = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const updateFilter = useCallback((filter = {}) => dispatch({ type: 'filter:change', payload: filter }), [])
   const resetFilter = useCallback(() => dispatch({ type: 'filter:reset' }), [])
-  const categoryChange = useCallback((category = []) => dispatch({ type: 'category:change', payload: category }), [])
-  const resetCategory = useCallback(() => dispatch({ type: 'category:reset' }), [])
+  const updateCategory = useCallback(
+    (filter = {}) => dispatch({ type: 'category:change', payload: filter.category }),
+    []
+  )
+  const resetCategory = useCallback((filter = {}) => dispatch({ type: 'category:reset', payload: filter.category }), [])
   const performRequest = useCallback(() => {
     dispatch({ type: 'request:start' })
+
     // prettier-ignore
     const serializeFilter = filter =>
       [ ...filter.category.map(categoryId => `category[]=${categoryId}`),
-        `isNew=${filter.isNew}`
+        `isNew=${filter.isNew}`,
+        `isLimited=${filter.isLimited}`
       ].join('&')
-
-    let url = `/api/product?${serializeFilter(state.filter)}`
-    console.log('url is: ', url)
-    fetch(`/api/product?${serializeFilter(state.filter)}`)
-      .then(res => {
-        if (!res.ok || res.status !== 200) {
-          throw new Error(`Request failed with status code ${res.status}`)
-        }
-        return res.json()
-      })
+    getData('/api/product?', serializeFilter(state.filter))
       .then(data => dispatch({ type: 'request:success', payload: data.results }))
       .catch(err => {
         console.error(err)
@@ -116,7 +123,7 @@ export const useProductList = () => {
     ...state,
     updateFilter,
     resetFilter,
-    categoryChange,
+    updateCategory,
     resetCategory,
   }
 }

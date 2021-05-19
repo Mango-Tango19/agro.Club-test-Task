@@ -12,6 +12,7 @@ const ProductList = () => {
   const { items, filter, status, updateFilter, loading, error } = useProductList()
 
   const handleFilterIsNewUpdate = () => updateFilter({ isNew: !filter.isNew })
+  const handleFilterIsLimitedUpdate = () => updateFilter({ isLimited: !filter.isLimited })
 
   if (loading) {
     return <Loader />
@@ -38,6 +39,7 @@ const ProductList = () => {
             </div>
             <div className={styles.filtersStatus}>
               <span className={styles.filtersTitle}>Status</span>
+
               <div className={styles.filtersNew}>
                 <input
                   id="is_new"
@@ -49,7 +51,13 @@ const ProductList = () => {
                 <label htmlFor="is_new">New</label>
               </div>
               <div className={styles.filtersLimited}>
-                <input id="is_limited" type="checkbox" className={styles.customCheckbox} />
+                <input
+                  id="is_limited"
+                  type="checkbox"
+                  className={styles.customCheckbox}
+                  onChange={handleFilterIsLimitedUpdate}
+                  checked={filter.isLimited}
+                />
                 <label htmlFor="is_limited">Limited</label>
               </div>
             </div>

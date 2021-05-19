@@ -7,6 +7,7 @@
   grid-auto-columns: 1fr;
   background-color: #fafafa;
 }
+
 /*filters area styles*/
 .filters {
   display: grid;
@@ -66,6 +67,12 @@
   grid-gap: 24px;
   grid-template-columns: repeat(3, 448px);
   grid-auto-rows: 145px;
+}
+
+@media only screen and (max-width: 1380px) {
+  .itemsContainer {
+    grid-template-columns: repeat(2, 448px);
+  }
 }
 
 /*checkbox styles*/
