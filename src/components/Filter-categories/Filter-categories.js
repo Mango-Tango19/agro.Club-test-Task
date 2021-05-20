@@ -2,7 +2,7 @@
 import Filter from '../Filter/Filter'
 import s from './Filter-categories.module.scss'
 //import { useProductList } from '../ProductList/useProductList'
-const FilterCategories = ({ items }) => {
+const FilterCategories = ({ items, handleChooseCategory, handleAllCategories }) => {
   const onlyUnique = (value, index, self) => {
     return self.indexOf(value) === index
   }
@@ -20,12 +20,12 @@ const FilterCategories = ({ items }) => {
   })
   //render categories on page
   const renderCategory = item => {
-    return <Filter item={item} key={item.categoryId} active={false} />
+    return <Filter item={item} key={item.categoryId} handleChooseCategory={handleChooseCategory} />
   }
 
   return (
     <div className={s.categories}>
-      <Filter item={'all'} active={true} />
+      <Filter item={'all'} handleAllCategories={handleAllCategories} />
       {categoriesOnPage.map(renderCategory)}
     </div>
   )

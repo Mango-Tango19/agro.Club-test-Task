@@ -9,11 +9,13 @@ import filterIcon from '../../assets/icons/filters.svg'
 import FilterCategories from '../Filter-categories/Filter-categories'
 
 const ProductList = () => {
-  const { items, filter, status, updateFilter, loading, error, updateCategory } = useProductList()
+  const { items, filter, status, updateFilter, loading, error, updateCategory, resetCategory } = useProductList()
 
   const handleFilterIsNewUpdate = () => updateFilter({ isNew: !filter.isNew })
   const handleFilterIsLimitedUpdate = () => updateFilter({ isLimited: !filter.isLimited })
-  const handleUpdateCategory = () => updateCategory({ category: filter.category })
+
+  const handleChooseCategory = categoryId => updateCategory({ category: [categoryId] })
+  const handleAllCategories = () => resetCategory({ category: [] })
 
   if (loading) {
     return <Loader />
@@ -36,7 +38,11 @@ const ProductList = () => {
           <div className={styles.filtersContent}>
             <div className={styles.filtersCategory}>
               <span className={styles.filtersTitle}>Category</span>
-              <FilterCategories items={items} />
+              <FilterCategories
+                items={items}
+                handleChooseCategory={handleChooseCategory}
+                handleAllCategories={handleAllCategories}
+              />
             </div>
             <div className={styles.filtersStatus}>
               <span className={styles.filtersTitle}>Status</span>
@@ -65,7 +71,6 @@ const ProductList = () => {
           </div>
         </div>
         <span>Status: {status}</span>
-        <button onClick={() => handleUpdateCategory()}>update</button>
         <div className={styles.itemsContainer}>
           {items.map(item => (
             <Product item={item} key={item.id} />

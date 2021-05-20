@@ -103,10 +103,15 @@ export const useProductList = () => {
 
     // prettier-ignore
     const serializeFilter = filter =>
-      [ ...filter.category.map(categoryId => `category[]=${categoryId}`),
-        `isNew=${filter.isNew}`,
-        `isLimited=${filter.isLimited}`
-      ].join('&')
+    [
+      [...filter.category.map(categoryId => `category[]=${categoryId}`)].join('&'),
+      `isNew=${filter.isNew}`,
+      `isLimited=${filter.isLimited}`,
+    ].join('&')
+
+    console.log('=======')
+    console.log(serializeFilter(state.filter))
+
     getData('/api/product?', serializeFilter(state.filter))
       .then(data => dispatch({ type: 'request:success', payload: data.results }))
       .catch(err => {
