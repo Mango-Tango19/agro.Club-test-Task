@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer } from 'react'
+import { useCallback, useEffect, useReducer, useMemo } from 'react'
 
 const initialState = {
   filter: {
@@ -10,6 +10,7 @@ const initialState = {
   items: [],
   loading: true,
   error: false,
+  categories: [],
 }
 
 const reducer = (state, action) => {
@@ -69,6 +70,14 @@ const reducer = (state, action) => {
         loading: false,
       }
     }
+    case 'request_categories:success': {
+      return {
+        ...state,
+        status: 'success',
+        loading: false,
+        categories: action.payload,
+      }
+    }
 
     case 'request:error': {
       return {
@@ -98,19 +107,34 @@ export const useProductList = () => {
     []
   )
   const resetCategory = useCallback((filter = {}) => dispatch({ type: 'category:reset', payload: filter.category }), [])
+  const getCategories = useMemo(() => {
+    dispatch({ type: 'request:start' })
+
+    getData('/api/category', '')
+      .then(data => dispatch({ type: 'request_categories:success', payload: data }))
+      .catch(err => {
+        console.error(err)
+        dispatch({ type: 'request:error' })
+      })
+  }, [])
+
+  useEffect(() => {
+    getCategories
+  }, [getCategories])
+
   const performRequest = useCallback(() => {
     dispatch({ type: 'request:start' })
 
     // prettier-ignore
     const serializeFilter = filter =>
     [
-      [...filter.category.map(categoryId => `category[]=${categoryId}`)].join('&'),
+      ...filter.category.map(categoryId => `category[]=${categoryId}`),
       `isNew=${filter.isNew}`,
       `isLimited=${filter.isLimited}`,
     ].join('&')
 
-    console.log('=======')
-    console.log(serializeFilter(state.filter))
+    // console.log('=======')
+    // console.log(serializeFilter(state.filter))
 
     getData('/api/product?', serializeFilter(state.filter))
       .then(data => dispatch({ type: 'request:success', payload: data.results }))
@@ -130,5 +154,6 @@ export const useProductList = () => {
     resetFilter,
     updateCategory,
     resetCategory,
+    getCategories,
   }
 }

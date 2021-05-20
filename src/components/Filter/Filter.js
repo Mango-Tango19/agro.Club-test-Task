@@ -1,25 +1,22 @@
 import s from './Filter.module.scss'
-//import { useProductList } from '../ProductList/useProductList'
 
 const Filter = ({ item, handleChooseCategory, handleAllCategories }) => {
-  ////const { updateCategory, resetCategory } = useProductList()
-
   let clazz = `${s.category} `
 
   if (item === 'all') {
-    let categoryId = 'all'
-    let categoryType = 'all'
+    let id = 'all'
+    let type = 'all'
 
     return (
-      <button id={categoryId} key={categoryType} className={clazz} onClick={() => handleAllCategories()}>
+      <button id={id} key={type} className={clazz} onClick={() => handleAllCategories()}>
         All
       </button>
     )
   }
-  const { categoryId, categoryName, categoryType } = item
+  const { id, name, type } = item
   return (
-    <button id={categoryId} key={categoryType} className={clazz} onClick={() => handleChooseCategory(categoryId)}>
-      {categoryName}
+    <button id={id} key={type} className={clazz} onClick={() => handleChooseCategory(id)}>
+      {name}
     </button>
   )
 }

@@ -9,7 +9,17 @@ import filterIcon from '../../assets/icons/filters.svg'
 import FilterCategories from '../Filter-categories/Filter-categories'
 
 const ProductList = () => {
-  const { items, filter, status, updateFilter, loading, error, updateCategory, resetCategory } = useProductList()
+  const {
+    items,
+    categories,
+    filter,
+    status,
+    updateFilter,
+    loading,
+    error,
+    updateCategory,
+    resetCategory,
+  } = useProductList()
 
   const handleFilterIsNewUpdate = () => updateFilter({ isNew: !filter.isNew })
   const handleFilterIsLimitedUpdate = () => updateFilter({ isLimited: !filter.isLimited })
@@ -34,12 +44,12 @@ const ProductList = () => {
             <img src={filterIcon} />
             <span>Filters</span>
           </div>
-
           <div className={styles.filtersContent}>
             <div className={styles.filtersCategory}>
               <span className={styles.filtersTitle}>Category</span>
+
               <FilterCategories
-                items={items}
+                items={categories}
                 handleChooseCategory={handleChooseCategory}
                 handleAllCategories={handleAllCategories}
               />
