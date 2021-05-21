@@ -1,0 +1,14 @@
+.empty-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+  flex-direction: column;
+  background-color: white;
+}
+
+.empty-page-text {
+  color: #037bff;
+  font-weight: 500;
+  font-size: 2rem;
+}

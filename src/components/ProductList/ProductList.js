@@ -7,6 +7,7 @@ import Header from '../Header/Header'
 import React from 'react'
 import filterIcon from '../../assets/icons/filters.svg'
 import FilterCategories from '../Filter-categories/Filter-categories'
+import EmptyPage from '../Empty-page/Empty-page'
 
 export const MyContext = React.createContext()
 
@@ -15,12 +16,12 @@ const ProductList = () => {
     items,
     categories,
     filter,
-    status,
     updateFilter,
     loading,
     error,
     updateCategory,
     resetCategory,
+    searchItems,
   } = useProductList()
 
   const handleFilterIsNewUpdate = () => updateFilter({ isNew: !filter.isNew })
@@ -34,6 +35,10 @@ const ProductList = () => {
     updateCategory({ category: [categoryId] })
   }
 
+  const handleTermChange = val => {
+    searchItems({ term: val })
+  }
+
   if (loading) {
     return <Loader />
   }
@@ -44,7 +49,8 @@ const ProductList = () => {
 
   return (
     <React.Fragment>
-      <Header />
+      <Header handleTermChange={handleTermChange} term={filter.term} />
+
       <div className={styles.root}>
         <div className={styles.filters}>
           <div className={styles.filtersHeader}>
@@ -84,7 +90,7 @@ const ProductList = () => {
             </div>
           </div>
         </div>
-        <span>Status: {status}</span>
+        {items.length === 0 ? <EmptyPage /> : null}
         <div className={styles.itemsContainer}>
           {items.map(item => (
             <Product item={item} key={item.id} />

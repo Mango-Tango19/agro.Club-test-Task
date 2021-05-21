@@ -17,7 +17,6 @@ const FilterCategories = ({ items, handleChooseCategory }) => {
         .indexOf(item.id) > -1
         ? true
         : false
-    console.log(active)
 
     return <Filter item={item} key={item.id} handleChooseCategory={handleChooseCategory} active={active} />
   }

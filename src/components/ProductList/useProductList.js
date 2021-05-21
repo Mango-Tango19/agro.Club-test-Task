@@ -5,6 +5,7 @@ const initialState = {
     isNew: false,
     isLimited: false,
     category: [],
+    term: '',
   },
   status: 'idle', // idle | work | success | error
   items: [],
@@ -52,6 +53,16 @@ const reducer = (state, action) => {
         filter: {
           ...state.filter,
           category: [],
+        },
+      }
+    }
+    case 'search:change': {
+      return {
+        ...state,
+        status: 'work',
+        filter: {
+          ...state.filter,
+          term: action.payload,
         },
       }
     }
@@ -122,19 +133,32 @@ export const useProductList = () => {
     getCategories
   }, [getCategories])
 
+  const searchItems = useCallback((filter = {}) => dispatch({ type: 'search:change', payload: filter.term }), [])
+  useEffect(() => {
+    searchItems
+  }, [searchItems])
+
   const performRequest = useCallback(() => {
     dispatch({ type: 'request:start' })
 
     // prettier-ignore
-    const serializeFilter = filter =>
-    [
-      ...filter.category.map(categoryId => `category[]=${categoryId}`),
-      `isNew=${filter.isNew}`,
-      `isLimited=${filter.isLimited}`,
-    ].join('&')
+    const serializeFilter = filter => {
 
-    // console.log('=======')
-    // console.log(serializeFilter(state.filter))
+      let query = [
+        ...filter.category.map(categoryId => `category[]=${categoryId}`),
+        `isNew=${filter.isNew}`,
+        `isLimited=${filter.isLimited}`
+      ]
+    if (filter.term.length > 0) {
+      query = [
+        ...query,
+        `search=${filter.term}`
+      ]
+    }
+
+    return query.join('&')
+    
+  }
 
     getData('/api/product?', serializeFilter(state.filter))
       .then(data => dispatch({ type: 'request:success', payload: data.results }))
@@ -155,5 +179,6 @@ export const useProductList = () => {
     updateCategory,
     resetCategory,
     getCategories,
+    searchItems,
   }
 }
