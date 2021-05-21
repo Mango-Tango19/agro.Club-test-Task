@@ -8,6 +8,8 @@ import React from 'react'
 import filterIcon from '../../assets/icons/filters.svg'
 import FilterCategories from '../Filter-categories/Filter-categories'
 
+export const MyContext = React.createContext()
+
 const ProductList = () => {
   const {
     items,
@@ -24,8 +26,13 @@ const ProductList = () => {
   const handleFilterIsNewUpdate = () => updateFilter({ isNew: !filter.isNew })
   const handleFilterIsLimitedUpdate = () => updateFilter({ isLimited: !filter.isLimited })
 
-  const handleChooseCategory = categoryId => updateCategory({ category: [categoryId] })
-  const handleAllCategories = () => resetCategory({ category: [] })
+  const handleChooseCategory = categoryId => {
+    if (categoryId === 'all') {
+      resetCategory({ category: [] })
+      return
+    }
+    updateCategory({ category: [categoryId] })
+  }
 
   if (loading) {
     return <Loader />
@@ -47,12 +54,9 @@ const ProductList = () => {
           <div className={styles.filtersContent}>
             <div className={styles.filtersCategory}>
               <span className={styles.filtersTitle}>Category</span>
-
-              <FilterCategories
-                items={categories}
-                handleChooseCategory={handleChooseCategory}
-                handleAllCategories={handleAllCategories}
-              />
+              <MyContext.Provider value={filter.category}>
+                <FilterCategories items={categories} handleChooseCategory={handleChooseCategory} />
+              </MyContext.Provider>
             </div>
             <div className={styles.filtersStatus}>
               <span className={styles.filtersTitle}>Status</span>
