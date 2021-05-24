@@ -6,6 +6,15 @@
   grid-gap: 16px;
   grid-auto-columns: 1fr;
   background-color: #fafafa;
+
+  @include small {
+    max-width: 450px;
+    padding: 20px 0;
+    margin: 0 auto;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 /*filters area styles*/
@@ -21,31 +30,63 @@
   padding: 24px 20px;
   background-color: white;
 
+  @include small {
+    display: flex;
+    max-width: 90vw;
+    height: 10vh;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
+    margin: 0;
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+
   &Header {
     display: flex;
     align-items: flex-start;
     span {
       @include fontStyle(18px, 24px, 600);
       color: #037bff;
+      @include small {
+        display: none;
+      }
     }
 
     img {
       margin-right: 8px;
+
+      @include small {
+        display: none;
+      }
     }
   }
 
   &Content {
     display: grid;
     grid-template-columns: 3fr 1fr;
+
+    @include small {
+      max-width: 100%;
+      display: flex;
+    }
   }
 
   &Category {
     display: grid;
+    @include small {
+      display: flex;
+    }
   }
 
   &Status {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+
+    @include small {
+      display: flex;
+    }
   }
 
   &Title {
@@ -54,6 +95,10 @@
     text-transform: uppercase;
     grid-column-start: 1;
     grid-column-end: 4;
+
+    @include small {
+      display: none;
+    }
   }
 
   &Limited {
@@ -67,11 +112,13 @@
   grid-gap: 24px;
   grid-template-columns: repeat(3, 448px);
   grid-auto-rows: 145px;
-}
 
-@media only screen and (max-width: 1380px) {
-  .itemsContainer {
+  @include tablet {
     grid-template-columns: repeat(2, 448px);
+  }
+
+  @include small {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -80,7 +127,7 @@
 .customCheckbox {
   position: absolute;
   z-index: -1;
-  opacity: 0;
+  display: none;
 }
 
 .customCheckbox + label:hover {

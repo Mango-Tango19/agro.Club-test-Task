@@ -1,4 +1,10 @@
+@import '../../scss/mixins';
+
 .categories {
   grid-column-start: 1;
   grid-column-end: 4;
+
+  @include small {
+    display: flex;
+  }
 }

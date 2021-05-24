@@ -50,7 +50,6 @@ const ProductList = () => {
   return (
     <React.Fragment>
       <Header handleTermChange={handleTermChange} term={filter.term} />
-
       <div className={styles.root}>
         <div className={styles.filters}>
           <div className={styles.filtersHeader}>
