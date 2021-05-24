@@ -5,10 +5,12 @@
   height: 30vh;
   flex-direction: column;
   background-color: white;
+  margin-top: 3rem;
 }
 
 .empty-page-text {
   color: #037bff;
   font-weight: 500;
   font-size: 2rem;
+  text-align: center;
 }
